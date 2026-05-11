@@ -46,7 +46,11 @@
     h1 { font-size: 40px; }
     h2 { font-size: 32px; }
   }
-  * { cursor: none; }
+  @media (min-width: 768px) { * { cursor: none; } }
+}
+
+@media (max-width: 768px) {
+  .custom-cursor, .custom-cursor-ring { display: none !important; }
 }
 
 @layer utilities {
