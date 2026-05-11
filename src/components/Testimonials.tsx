@@ -17,7 +17,7 @@ export default function Testimonials() {
   }, [paused]);
 
   return (
-    <section className="py-20 bg-[#FAF7F2]">
+    <section className="reveal py-20 bg-[#FAF7F2]">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="font-serif-d text-center mb-12">Loved by Thousands</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
