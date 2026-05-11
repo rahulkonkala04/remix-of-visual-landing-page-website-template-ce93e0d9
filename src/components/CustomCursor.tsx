@@ -1,13 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: 0, y: 0, rx: 0, ry: 0 });
   const hovering = useRef(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    if ("ontouchstart" in window || window.innerWidth < 768) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    setEnabled(true);
 
     const move = (e: MouseEvent) => {
       pos.current.x = e.clientX;
@@ -54,10 +57,12 @@ export default function CustomCursor() {
     };
   }, []);
 
+  if (!enabled) return null;
+
   return (
     <>
-      <div ref={dot} className="fixed top-0 left-0 w-[10px] h-[10px] rounded-full bg-[#C9A84C] pointer-events-none z-[9999]" />
-      <div ref={ring} className="fixed top-0 left-0 w-8 h-8 rounded-full border-2 border-[#C9A84C]/60 pointer-events-none z-[9999] transition-[width,height,background] duration-200 ease-out" />
+      <div ref={dot} className="custom-cursor fixed top-0 left-0 w-[10px] h-[10px] rounded-full bg-[#C9A84C] pointer-events-none z-[9999]" />
+      <div ref={ring} className="custom-cursor-ring fixed top-0 left-0 w-8 h-8 rounded-full border-2 border-[#C9A84C]/60 pointer-events-none z-[9999] transition-[width,height,background] duration-200 ease-out" />
     </>
   );
 }
