@@ -5,12 +5,13 @@ export default function Hero() {
   const blobsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const handle = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
       const y = (e.clientY / window.innerHeight - 0.5) * 2;
       blobsRef.current.forEach((b, i) => {
         if (!b) return;
-        const factor = 0.15 * (i % 2 === 0 ? 1 : -1) * 60;
+        const factor = 0.08 * (i % 2 === 0 ? 1 : -1) * 60;
         b.style.translate = `${x * factor}px ${y * factor}px`;
       });
     };
@@ -19,10 +20,10 @@ export default function Hero() {
   }, []);
 
   const blobs = [
-    { color: "#1B5E3B", cls: "blob-1", style: { top: "10%", left: "5%", width: 480, height: 480 } },
-    { color: "#C9A84C", cls: "blob-2", style: { top: "30%", right: "5%", width: 520, height: 520 } },
-    { color: "#2D7A56", cls: "blob-3", style: { bottom: "5%", left: "20%", width: 460, height: 460 } },
-    { color: "#E8D5B0", cls: "blob-4", style: { bottom: "10%", right: "15%", width: 400, height: 400 } },
+    { cls: "blob-1 hero-blob bg-[#1B5E3B] opacity-60", style: { top: "-100px", left: "-100px", width: 500, height: 500, filter: "blur(80px)" } },
+    { cls: "blob-2 hero-blob bg-[#C9A84C] opacity-40", style: { top: "200px", right: "-150px", width: 400, height: 400, filter: "blur(80px)" } },
+    { cls: "blob-3 hero-blob bg-[#2D7A56] opacity-50", style: { bottom: "-100px", left: "30%", width: 450, height: 450, filter: "blur(80px)" } },
+    { cls: "blob-4 hero-blob bg-[#C9A84C] opacity-30", style: { top: "100px", left: "40%", width: 300, height: 300, filter: "blur(60px)" } },
   ];
 
   return (
@@ -32,7 +33,7 @@ export default function Hero() {
           key={i}
           ref={(el) => { if (el) blobsRef.current[i] = el; }}
           className={`absolute rounded-full ${b.cls}`}
-          style={{ ...b.style, background: b.color, filter: "blur(100px)", opacity: 0.7, transition: "translate 0.6s ease-out" }}
+          style={{ ...b.style, transition: "translate 0.6s ease-out" }}
         />
       ))}
       <div className="absolute inset-0 bg-black/30" />

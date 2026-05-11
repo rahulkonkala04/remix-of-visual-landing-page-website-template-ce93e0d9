@@ -9,11 +9,15 @@ const items = [
 
 export default function Bestsellers() {
   return (
-    <section className="py-20 bg-[#FAF7F2]">
+    <section className="reveal py-20 bg-[#FAF7F2]">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="font-serif-d text-center mb-12">Bestsellers</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((p) => <ProductCard key={p.name} {...p} />)}
+          {items.map((p, i) => (
+            <div key={p.name} className="reveal-child" style={{ animationDelay: `${i * 100}ms` }}>
+              <ProductCard {...p} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

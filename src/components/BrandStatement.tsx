@@ -17,14 +17,18 @@ export default function BrandStatement() {
   }, []);
 
   return (
-    <section ref={ref} className="w-full py-24" style={{ background: "linear-gradient(180deg, #1B5E3B, #0D3D22)" }}>
+    <section ref={ref} className="reveal w-full py-24" style={{ background: "linear-gradient(180deg, #1B5E3B, #0D3D22)" }}>
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h2 className={`font-serif-d text-white ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ fontSize: "clamp(40px, 7vw, 72px)", lineHeight: 1.1 }}>
           Not just products. A lifestyle.
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-16">
           {stats.map((s, i) => (
-            <div key={s.label} className={visible ? "animate-fade-up" : "opacity-0"} style={{ animationDelay: `${0.2 + i * 0.15}s` }}>
+            <div
+              key={s.label}
+              className={`${visible ? "animate-fade-up" : "opacity-0"} pb-6 md:pb-0 md:border-0 border-b last:border-0`}
+              style={{ animationDelay: `${0.2 + i * 0.15}s`, borderColor: "rgba(201,168,76,0.3)" }}
+            >
               <div className="font-serif-d" style={{ fontSize: 56, color: "#C9A84C" }}>{s.num}</div>
               <div className="font-sans-d text-white/70 mt-2 tracking-wide">{s.label}</div>
             </div>
