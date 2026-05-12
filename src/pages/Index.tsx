@@ -1,26 +1,24 @@
-import AnnouncementRibbon from "@/components/AnnouncementRibbon";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
+import Stats from "@/components/Stats";
 import Categories from "@/components/Categories";
-import DailyStory from "@/components/DailyStory";
 import Bestsellers from "@/components/Bestsellers";
-import BrandStatement from "@/components/BrandStatement";
-import Testimonials from "@/components/Testimonials";
+import TrustBadges from "@/components/TrustBadges";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#1A1A1A]">
-      <AnnouncementRibbon />
+    <div className="grain min-h-screen bg-[var(--graphite)] text-[var(--off-white)]">
       <Navbar />
       <main>
         <Hero />
+        <Marquee />
+        <Stats />
         <Categories />
-        <DailyStory />
         <Bestsellers />
-        <BrandStatement />
-        <Testimonials />
+        <TrustBadges />
         <Newsletter />
       </main>
       <Footer />
