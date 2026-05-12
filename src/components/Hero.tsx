@@ -1,45 +1,57 @@
-import { ChevronDown } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import ParticleCanvas from "./ParticleCanvas";
 
 export default function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const container = {
+    hidden: {},
+    show: { transition: { delayChildren: 0.4, staggerChildren: 0.15 } },
+  };
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const } },
+  };
+
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-[#0D3D22]">
-      {/* Animated blobs */}
-      <div className="absolute rounded-full bg-[#1B5E3B] opacity-60" style={{ top: "-100px", left: "-100px", width: 500, height: 500, filter: "blur(80px)", animation: "heroBlob1 9s ease-in-out infinite alternate" }} />
-      <div className="absolute rounded-full bg-[#C9A84C] opacity-40" style={{ top: "200px", right: "-150px", width: 400, height: 400, filter: "blur(80px)", animation: "heroBlob2 11s ease-in-out infinite alternate" }} />
-      <div className="absolute rounded-full bg-[#2D7A56] opacity-50" style={{ bottom: "-100px", left: "30%", width: 450, height: 450, filter: "blur(80px)", animation: "heroBlob3 10s ease-in-out infinite alternate" }} />
-      <div className="absolute rounded-full bg-[#C9A84C] opacity-30" style={{ top: "100px", left: "40%", width: 300, height: 300, filter: "blur(60px)", animation: "heroBlob4 12s ease-in-out infinite alternate" }} />
+    <section id="home" ref={ref} className="relative min-h-screen w-full overflow-hidden bg-[var(--graphite)]">
+      <ParticleCanvas />
+      {/* Ambient orbs */}
+      <div className="absolute pointer-events-none rounded-full orb" style={{ top: "10%", left: "8%", width: 380, height: 380, background: "radial-gradient(circle, rgba(14,91,60,0.55), transparent 70%)", filter: "blur(40px)" }} />
+      <div className="absolute pointer-events-none rounded-full orb-2" style={{ bottom: "8%", right: "6%", width: 420, height: 420, background: "radial-gradient(circle, rgba(199,164,71,0.40), transparent 70%)", filter: "blur(50px)" }} />
+      <div className="absolute pointer-events-none rounded-full orb-3" style={{ top: "40%", right: "30%", width: 300, height: 300, background: "radial-gradient(circle, rgba(6,45,31,0.85), transparent 70%)", filter: "blur(50px)" }} />
 
-      {/* Floating icons */}
-      <div className="absolute select-none pointer-events-none text-4xl md:text-5xl" style={{ top: "15%", left: "8%", zIndex: 1, animation: "floatA 7s ease-in-out infinite alternate" }}>☀️</div>
-      <div className="absolute select-none pointer-events-none text-4xl md:text-5xl" style={{ top: "70%", right: "10%", zIndex: 1, animation: "floatB 8s ease-in-out infinite alternate" }}>🌿</div>
-      <div className="absolute select-none pointer-events-none text-3xl md:text-4xl" style={{ top: "25%", right: "20%", zIndex: 1, animation: "floatC 6s ease-in-out infinite alternate" }}>✨</div>
-
-      <div className="absolute inset-0 bg-black/30" />
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-white">
-        <span className="font-sans-d text-xs md:text-sm uppercase tracking-[0.3em] mb-6" style={{ color: "#C9A84C", opacity: 0, animation: "fadeSlideUp 0.6s ease forwards 0.2s" }}>
-          ✦ Premium Daily Essentials
-        </span>
-        <h1 className="font-serif-d text-white max-w-4xl" style={{ fontSize: "clamp(48px, 8vw, 80px)", opacity: 0, animation: "fadeSlideUp 0.8s ease forwards 0.4s" }}>
-          Elevate Every Day.
-        </h1>
-        <p className="font-sans-d text-[18px] text-white/80 max-w-xl mt-6" style={{ opacity: 0, animation: "fadeSlideUp 0.6s ease forwards 0.7s" }}>
-          Curated essentials crafted to bring quiet luxury into your daily rituals.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center mt-10" style={{ opacity: 0, animation: "fadeSlideUp 0.6s ease forwards 1s" }}>
-          <button className="font-sans-d font-semibold px-8 py-3.5 rounded-md text-[#1A1A1A] transition-all hover:scale-[1.03]" style={{ background: "#C9A84C" }}>
-            Explore Collection
-          </button>
-          <button className="font-sans-d font-semibold px-8 py-3.5 rounded-md border-2 border-white text-white hover:bg-white hover:text-[#1A1A1A] transition-all">
-            Our Story
-          </button>
-        </div>
-        <p className="font-sans-d text-[13px] tracking-wide mt-12" style={{ color: "#C9A84C", opacity: 0, animation: "fadeSlideUp 0.6s ease forwards 1.2s" }}>
-          500+ Products · 10K+ Customers · Same-Day Dispatch
-        </p>
-      </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce-slow text-white/80">
-        <ChevronDown size={28} />
-      </div>
+      <motion.div style={{ y, opacity }} className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
+        <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col items-center max-w-5xl">
+          <motion.span variants={item} className="inline-block px-5 py-2 rounded-full glass border border-[rgba(199,164,71,0.35)] text-[var(--gold)] font-sans-d text-[11px] tracking-[0.3em] uppercase">
+            ✦ Premium Daily Essentials ✦
+          </motion.span>
+          <motion.h1 variants={item} className="font-serif-d font-semibold text-[var(--off-white)] mt-8 leading-[1.02]" style={{ fontSize: "clamp(52px, 9vw, 110px)" }}>
+            Elevate <em className="italic text-shimmer">Every</em> Day.
+          </motion.h1>
+          <motion.p variants={item} className="font-sans-d text-[var(--off-white)]/65 max-w-xl mt-8 text-[17px] leading-relaxed">
+            Curated essentials crafted to bring quiet luxury into your daily rituals.
+          </motion.p>
+          <motion.div variants={item} className="flex flex-wrap gap-4 justify-center mt-10">
+            <button className="font-sans-d font-semibold text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full text-[var(--graphite)] gold-gradient transition-all hover:scale-[1.04] hover:shadow-[0_0_40px_rgba(199,164,71,0.5)]">
+              Explore Collection →
+            </button>
+            <button className="font-sans-d font-semibold text-[13px] uppercase tracking-[0.18em] px-8 py-4 rounded-full glass text-[var(--off-white)] border border-white/15 hover:border-[var(--gold)] transition-all">
+              Our Story
+            </button>
+          </motion.div>
+          <motion.div variants={item} className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span className="font-sans-d text-[10px] tracking-[0.4em] text-[var(--off-white)]/50 uppercase">Scroll</span>
+            <div className="w-px h-12 overflow-hidden">
+              <div className="w-px h-full scroll-line" style={{ background: "linear-gradient(to bottom, transparent, var(--gold), transparent)" }} />
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
