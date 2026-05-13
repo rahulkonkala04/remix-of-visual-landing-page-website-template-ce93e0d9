@@ -1,11 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
-import Stats from "@/components/Stats";
-import Categories from "@/components/Categories";
-import Bestsellers from "@/components/Bestsellers";
-import TrustBadges from "@/components/TrustBadges";
-import Newsletter from "@/components/Newsletter";
+import Products from "@/components/Products";
+import Story from "@/components/Story";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,12 +10,8 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
-        <Stats />
-        <Categories />
-        <Bestsellers />
-        <TrustBadges />
-        <Newsletter />
+        <Products />
+        <Story />
       </main>
       <Footer />
     </div>

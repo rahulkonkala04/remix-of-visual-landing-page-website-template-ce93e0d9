@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --deep-green: #062D1F;
+  --deep-green: #0B3D2E;
   --emerald: #0E5B3C;
-  --gold: #C7A447;
-  --gold-light: #E8C96A;
+  --emerald-light: #4ADE80;
+  --silver: #C8C8C8;
+  --silver-light: #E8E8E8;
   --off-white: #F6F3ED;
   --graphite: #0A0A0A;
-  --glass: rgba(255,255,255,0.05);
-  --glass-border: rgba(255,255,255,0.10);
 
   --background: 0 0% 4%;
   --foreground: 40 27% 95%;
@@ -18,8 +17,8 @@
   --card-foreground: 40 27% 95%;
   --popover: 0 0% 6%;
   --popover-foreground: 40 27% 95%;
-  --primary: 44 53% 53%;
-  --primary-foreground: 0 0% 4%;
+  --primary: 152 73% 21%;
+  --primary-foreground: 40 27% 95%;
   --secondary: 0 0% 10%;
   --secondary-foreground: 40 27% 95%;
   --muted: 0 0% 12%;
@@ -30,7 +29,7 @@
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 15%;
   --input: 0 0% 15%;
-  --ring: 44 53% 53%;
+  --ring: 152 73% 21%;
   --radius: 0.75rem;
 }
 
@@ -42,6 +41,7 @@
     color: var(--off-white);
     font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
   h1, h2, h3, h4, h5 { font-family: 'Playfair Display', serif; letter-spacing: -0.01em; }
@@ -50,79 +50,25 @@
 @layer utilities {
   .font-serif-d { font-family: 'Playfair Display', serif; }
   .font-sans-d { font-family: 'DM Sans', sans-serif; }
-  .text-gold { color: var(--gold); }
-  .text-gold-light { color: var(--gold-light); }
-  .text-offwhite { color: var(--off-white); }
+  .text-silver { color: var(--silver); }
+  .text-emerald-light { color: var(--emerald-light); }
   .bg-graphite { background: var(--graphite); }
   .bg-deep-green { background: var(--deep-green); }
-  .bg-emerald-d { background: var(--emerald); }
-
-  .glass {
-    background: var(--glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-  }
-  .glass-strong {
-    background: rgba(10,10,10,0.7);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--glass-border);
-  }
-
-  .gold-gradient {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-  }
-  .text-shimmer {
-    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    animation: shimmer 4s linear infinite;
-  }
-  .neon-gold:hover {
-    box-shadow: 0 0 24px rgba(199,164,71,0.45), 0 0 1px rgba(199,164,71,0.6) inset;
-    border-color: var(--gold);
-  }
-  .neon-emerald:hover {
-    box-shadow: 0 0 24px rgba(14,91,60,0.55), 0 0 1px rgba(14,91,60,0.8) inset;
-    border-color: var(--emerald);
-  }
 }
 
-/* Film grain overlay */
+/* Subtle film grain overlay */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.025;
+  opacity: 0.02;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+@keyframes pulseOrb {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.12); opacity: 0.75; }
 }
-@keyframes pulse-orb {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.15); opacity: 0.85; }
-}
-.orb { animation: pulse-orb 8s ease-in-out infinite; }
-.orb-2 { animation: pulse-orb 11s ease-in-out infinite; }
-.orb-3 { animation: pulse-orb 9s ease-in-out infinite; }
-
-@keyframes scrollLine {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-.scroll-line { animation: scrollLine 2.4s ease-in-out infinite; }
-
-/* Hide custom cursor styles from earlier theme */
-* { cursor: auto; }
